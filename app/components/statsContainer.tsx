@@ -1,0 +1,69 @@
+"use client";
+import { UserContext } from "../context";
+import React, { useContext, useEffect, useId } from "react";
+import StatsChips from "./StatsComponent/statsChips";
+import GithubContributionCalendar from "./StatsComponent/githubContributionCalendar";
+import TopLanguageContainer from "./StatsComponent/topLanguageContainer";
+import TopStarredContainer from "./StatsComponent/topStarredContainer";
+import { useRouter } from "next/navigation";
+
+function StatsContainer() {
+  const userInfo: any = useContext(UserContext);
+  const {
+    followers,
+    following,
+    public_repos,
+    created_at,
+    updated_at,
+    login,
+    public_gists,
+  } = userInfo.userData;
+  const router = useRouter();
+  useEffect(() => {
+    if (login) {
+      getStatsData();
+    } else {
+      router.push("/");
+    }
+  }, []);
+
+  const getStatsData = async () => {
+    const getStatsData = await fetch(`/api/user/stats/${login}`, {
+      cache: "no-store",
+    });
+    const statsDataResult = await getStatsData.json();
+    userInfo.setStatsData(statsDataResult);
+  };
+
+  return (
+    <>
+      <div className="w-full h-80 flex justify-between flex-col">
+        <GithubContributionCalendar
+          yearRange={{
+            startDate: created_at,
+            endDate: updated_at,
+            name: login,
+          }}
+        />
+      </div>
+      <StatsChips
+        statsData={{
+          followers: followers,
+          following: following,
+          totalRepos: public_repos,
+          gists: public_gists,
+        }}
+      />
+      <div className="flex justify-between xl:flex-wrap md:flex-wrap">
+        <div className="chart-container shadow-xl">
+          <TopLanguageContainer />
+        </div>
+        <div className="chart-container shadow-xl">
+          <TopStarredContainer />
+        </div>
+      </div>
+    </>
+  );
+}
+
+export default StatsContainer;
