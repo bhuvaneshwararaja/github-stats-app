@@ -10,16 +10,24 @@
   },
   "dependencies": {
     "@types/node": "20.10.0",
-    "@types/react": "18.2.38",
     "@types/react-dom": "18.2.17",
     "autoprefixer": "10.4.16",
+    "chart.js": "^4.4.0",
+    "chartjs": "^0.3.24",
     "eslint": "8.54.0",
     "eslint-config-next": "14.0.3",
-    "next": "14.0.3",
+    "next": "^14.0.3",
     "postcss": "8.4.31",
     "react": "18.2.0",
+    "react-chartjs-2": "^5.2.0",
     "react-dom": "18.2.0",
+    "react-github-calendar": "^4.0.6",
+    "react-icons": "^4.12.0",
     "tailwindcss": "3.3.5",
     "typescript": "5.3.2"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.38",
+    "daisyui": "^4.4.7"
   }
 }
