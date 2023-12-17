@@ -22,12 +22,12 @@ function GithubContributionCalendar({
             className="rounded-md shadow-md p-3 w-full absolute"
 
           >
-            <div className="flex flex-col">
+            <div className="flex flex-col  w-full  justify-center items-center">
               <GitHubCalendar
                 username={name}
                 colorScheme="light"
                 year={year}
-                fontSize={16}
+                fontSize={18}
                 blockMargin={10}
               />
               <div className=" overflow-y-scroll">

@@ -1,8 +1,7 @@
-"use client";
 import React, { useContext, useEffect, useState } from "react";
-import { Pie } from "react-chartjs-2";
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { UserContext } from "@/app/context";
+import Chart from "react-apexcharts";
+
 
 function TopLanguageContainer() {
   const userstatsData: any = useContext(UserContext);
@@ -19,52 +18,49 @@ function TopLanguageContainer() {
     }
   }, [userstatsData]);
 
-  ChartJS.register(ArcElement, Tooltip, Legend);
 
-  const options = {
-    responsive: true,
-    maintainAspectRation: true,
-    plugins: {
-      title: {
-        display: true,
-        text: "Top Languages",
-      },
+
+  let options: any = {
+    chart: {
+      id: "pie",
+      foreColor: "#fff",
+      type:"donut",
+      height: 430,
+
     },
-  };
-  const pieChartData = {
-    labels: statsKey,
-    datasets: [
+      labels: statsKey,
+    grid: {
+      show: false,
+    },
+    responsive: [
       {
-        label: "Most used language",
-        data: statsData,
-        backgroundColor: [
-          "#0457ac",
-          "#308fac",
-          "#37bd79",
-          "#a7e237",
-          "#f4e604"
-        ],
-        borderColor: [
-         "#0457ac",
-         "#308fac",
-         "#37bd79",
-         "#a7e237",
-         "#f4e604"
-        ],
-        borderWidth: 1,
-      },
+        breakpoint: 300,
+        options: {
+          plotOptions: {
+            bar: {
+              horizontal: false
+            }
+          },
+          legend: {
+            position: "bottom"
+          }
+        }
+      }
     ],
+
   };
 
   return (
     <div>
       {statsData ? (
-        <Pie
-          height="300px"
-          width="600px"
-          data={pieChartData}
-          options={options}
-        />
+        <div className="p-3 chart-card">
+            <Chart
+              options={options}
+              series={statsData}
+              type="donut"
+              width={"600px"}
+            />
+          </div>
       ) : null}
     </div>
   );

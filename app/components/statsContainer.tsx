@@ -6,6 +6,7 @@ import GithubContributionCalendar from "./StatsComponent/githubContributionCalen
 import TopLanguageContainer from "./StatsComponent/topLanguageContainer";
 import TopStarredContainer from "./StatsComponent/topStarredContainer";
 import { useRouter } from "next/navigation";
+import PullRequestStats from "./StatsComponent/pullRequestStats";
 
 function StatsContainer() {
   const userInfo: any = useContext(UserContext);
@@ -37,31 +38,33 @@ function StatsContainer() {
 
   return (
     <>
-      <div className="w-full h-80 flex justify-between flex-col">
-        <GithubContributionCalendar
-          yearRange={{
-            startDate: created_at,
-            endDate: updated_at,
-            name: login,
-          }}
-        />
-      </div>
-      <StatsChips
-        statsData={{
-          followers: followers,
-          following: following,
-          totalRepos: public_repos,
-          gists: public_gists,
-        }}
-      />
-      <div className="flex justify-between xl:flex-wrap md:flex-wrap">
-        <div className="chart-container shadow-xl">
+      <div className="flex flex-col">
+        <div className="flex justify-between mt-10">
           <TopLanguageContainer />
-        </div>
-        <div className="chart-container shadow-xl">
           <TopStarredContainer />
+
         </div>
+        <div>
+            <StatsChips
+              statsData={{
+                followers: followers,
+                following: following,
+                totalRepos: public_repos,
+                gists: public_gists,
+              }}
+            />
+          </div>
+
+          <PullRequestStats/>
+          <GithubContributionCalendar
+            yearRange={{
+              startDate: created_at,
+              endDate: updated_at,
+              name: login,
+            }}
+          />
       </div>
+
     </>
   );
 }

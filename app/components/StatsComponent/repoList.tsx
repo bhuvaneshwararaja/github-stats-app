@@ -46,7 +46,7 @@ function RepoList() {
             {loader ? (
               <>
                 {new Array(12).fill(0).map((data: number) => (
-                  <div className="skeleton w-11/12 h-40"></div>
+                  <div className="skeleton w-11/12 h-40" key={data}></div>
                 ))}
               </>
             ) : (
@@ -57,6 +57,7 @@ function RepoList() {
                     <div
                       className="list-tabs w-11/12 h-40 flex flex-col justify-between shadow-md rounded-md mt-3 p-3 cursor-pointer"
                       style={{ backgroundColor: "rgb(43 43 72)" }}
+                      key={data}
                     >
                       <div className="flex flex-col">
                         <h1 className="text-white font-bold text-lg">
@@ -130,6 +131,7 @@ function RepoList() {
                     onInput={(e) => {
                       setCurrentPage(index + 1);
                     }}
+                    key={index}
                   />
                 );
               })}

@@ -8,7 +8,7 @@ export default function RootLayout({
 }) {
   return (
     <div className="flex w-auto" style={{height: "100vh"}}>
-      <Profile />
+      {/* <Profile /> */}
       {children}
     </div>
   );

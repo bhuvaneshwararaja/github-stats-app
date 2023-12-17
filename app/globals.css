@@ -3,13 +3,10 @@
 @tailwind utilities;
 
 body {
-  color: #000000;
-  padding: 1rem;
+  background-color: #0d1117;
 }
 
-.w-100 {
-  width: 100vh;
-}
+
 
 .h-100 {
   height: 100vh;
@@ -18,6 +15,15 @@ body {
 .he-80 {
 
   height: 80vh;
+}
+
+.he-100 {
+
+  height: 100vh;
+}
+
+.he-18 {
+  height: 18vh;
 }
 
 .mockup-window::before {
@@ -78,8 +84,40 @@ body {
 
 
 
-.repo-card{
-  background-image: linear-gradient( 112.1deg,  rgba(32,38,57,1) 11.4%, rgba(63,76,119,1) 70.2% );
-  
+.repo-card {
+  background-image: linear-gradient(112.1deg, rgba(32, 38, 57, 1) 11.4%, rgba(63, 76, 119, 1) 70.2%);
+
 }
 
+
+.human-img {
+  animation: upDown 2s linear alternate-reverse infinite;
+}
+
+@keyframes upDown {
+  0% {
+    transform: translateY(-10px)
+  }
+
+  50% {
+    transform: translateY(0px)
+  }
+
+  100% {
+    transform: translateY(10px)
+  }
+
+}
+
+#bar-chart {
+  max-width: 900px;
+  opacity: 0.9;
+}
+
+.chart-card {
+  height: 45vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 700px;
+}

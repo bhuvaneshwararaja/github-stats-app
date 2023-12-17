@@ -1,86 +1,94 @@
 "use client";
 import React, { useContext, useEffect, useState } from "react";
-import { Bar } from "react-chartjs-2";
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
-  Tooltip,
-  Legend,
-} from "chart.js";
 import { UserContext } from "@/app/context";
+import Chart from "react-apexcharts";
 
 function TopStarredContainer() {
+  const userstatsData: any = useContext(UserContext);
+  const [statsData, setStatsData] = useState(
+    userstatsData.statsData["topStarredRepo"]
+  );
+  const [statsKey, setStatsKey] = useState<String[]>([]);
 
- const userstatsData: any = useContext(UserContext);
- const [statsData, setStatsData] = useState(
-   userstatsData.statsData["topStarredRepo"]
- );
- const [statsKey, setStatsKey] = useState<String[]>([]);
+  useEffect(() => {
+    if (userstatsData.statsData) {
+      const languageData = userstatsData.statsData["topStarredRepo"];
+      if (languageData) {
+        let key = languageData.map((data: any) => data.repoName);
+        let data = languageData.map((data: any) => data.stargazers_count);
+        setStatsData(data);
+        setStatsKey(key);
+      }
+    }
+  }, [userstatsData]);
 
- useEffect(() => {
-   if (userstatsData.statsData) {
-     const languageData = userstatsData.statsData["topStarredRepo"];
-     if(languageData){
-      let key = languageData.map((data:any) => data.repoName)
-      let data = languageData.map((data:any) => data.stargazers_count)
-      setStatsData(data);
-      setStatsKey(key);
-     }
-
-   }
- }, [userstatsData]);
-
- ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
-  Tooltip,
-  Legend
-);
-
- const options:any = {
-  responsive: true,
-  maintainAspectRation: true,
-
-  plugins: {
-    legend: {
-      position: "top",
+  let options: any = {
+    chart: {
+      id: "basic-bar",
+      fontColor: "#fff",
     },
-    title: {
-      display: true,
-      text: "Top stared repo",
+    xaxis: {
+      categories: statsKey,
     },
-  },
-};
-
-  const barGraphData = {
-   labels: statsKey,
-   datasets: [
-    {
-      label: "Most starred repo",
-      data: statsData,
-      backgroundColor: [
-       "#01084f",
-       "#391954",
-       "#391954",
-       "#a73c5a",
-       "#ff7954"
-     ],
+    grid: {
+      show: false,
     },
-  ]
- };
-
- 
+    responsive: [
+      {
+        breakpoint: 300,
+        options: {
+          plotOptions: {
+            bar: {
+              horizontal: false
+            }
+          },
+          legend: {
+            position: "bottom"
+          }
+        }
+      }
+    ],
+    fill: {
+      type: "gradient",
+      gradient: {
+        shadeIntensity: 0,
+        opacityFrom: 0.4,
+        opacityTo: 0.9,
+        stops: [0, 40, 90],
+        colorStops:          [
+          {
+            offset: 30,
+            color: "#FDC830",
+            opacity: 10,
+          },
+          {
+            offset: 100,
+            color: "#F37335",
+            opacity: 50,
+          },
+        ],
+      },
+    },
+  };
 
   return (
     <div>
-          {
-           statsData ? <Bar height="300px" width="600px" options={options} data={barGraphData} /> : null
-          }
+      {statsData ? (
+        <>
+          <div className="p-3 chart-card">
+            <Chart
+              options={options}
+              series={[
+                {
+                  data: statsData,
+                },
+              ]}
+              type="bar"
+              width={"600px"}
+            />
+          </div>
+        </>
+      ) : null}
     </div>
   );
 }

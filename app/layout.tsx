@@ -2,6 +2,7 @@ import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import UserContextProvider from "./UserContextProvider";
+import Image from "next/image";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,6 +19,9 @@ export default function RootLayout({
   return (
     <html lang="en" data-theme="winter">
       <body className={inter.className}>
+        <div className="absolute top-3 left-3">
+        <Image src="/logo.png" width={50} height={50} alt="logo"></Image>
+        </div>
         <UserContextProvider>{children}</UserContextProvider>
       </body>
     </html>

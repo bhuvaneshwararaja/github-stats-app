@@ -5,7 +5,8 @@ import { UserContext } from "./context";
 function UserContextProvider({ children }: { children: React.ReactNode }) {
 
   const [userData, setUserData] = useState([]);
-  const [statsData,setStatsData] = useState([])
+  const [statsData,setStatsData] = useState([]);
+  
   return (
     <>
       <UserContext.Provider value={{ userData, setUserData,statsData,setStatsData }}>
