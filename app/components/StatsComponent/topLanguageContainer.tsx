@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { UserContext } from "@/app/context";
 import Chart from "react-apexcharts";
-
+import Loader from "../helperComponent/loader";
 
 function TopLanguageContainer() {
   const userstatsData: any = useContext(UserContext);
@@ -9,28 +9,35 @@ function TopLanguageContainer() {
     userstatsData.statsData["topLanguages"]
   );
   const [statsKey, setStatsKey] = useState<String[]>([]);
-
+  const [loader, setLoader] = useState<Boolean>(false);
   useEffect(() => {
+    setLoader(true);
     if (userstatsData.statsData) {
       const languageData = userstatsData.statsData["topLanguages"];
       setStatsData(languageData ? Object.values(languageData) : []);
       setStatsKey(languageData ? Object.keys(languageData) : []);
     }
+    setLoader(false);
   }, [userstatsData]);
-
-
 
   let options: any = {
     chart: {
       id: "pie",
       foreColor: "#fff",
-      type:"donut",
-      height: 430,
-
+      type: "donut",
+      height: 450,
     },
-      labels: statsKey,
+    labels: statsKey,
     grid: {
       show: false,
+    },
+    fill: {
+      type: "pattern",
+      opacity: 1,
+      pattern: {
+        enabled: true,
+        style: "horizontalLines",
+      },
     },
     responsive: [
       {
@@ -38,30 +45,31 @@ function TopLanguageContainer() {
         options: {
           plotOptions: {
             bar: {
-              horizontal: false
-            }
+              horizontal: false,
+            },
           },
           legend: {
-            position: "bottom"
-          }
-        }
-      }
+            position: "bottom",
+          },
+        },
+      },
     ],
-
   };
 
   return (
     <div>
-      {statsData ? (
-        <div className="p-3 chart-card">
-            <Chart
-              options={options}
-              series={statsData}
-              type="donut"
-              width={"600px"}
-            />
-          </div>
-      ) : null}
+      {statsData && !loader ? (
+        <div className="p-3 chart-card chart-box">
+          <Chart
+            options={options}
+            series={statsData}
+            type="donut"
+            width={"530px"}
+          />
+        </div>
+      ) : (
+        <Loader />
+      )}
     </div>
   );
 }

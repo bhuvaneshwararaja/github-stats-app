@@ -3,7 +3,7 @@ import Login from "./login/page";
 
 export default function Home() {
   return (
-    <div className="w-full h-100">
+    <div className="w-full overflow-hidden" style={{height:"90vh" }}>
       <Login />
     </div>
   );

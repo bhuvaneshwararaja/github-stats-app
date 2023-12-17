@@ -1,12 +1,14 @@
-import { getLanguageCount, topStarredRepo } from "./commonHelper";
+import { getLanguageCount, topRepoSize, topStarredRepo } from "./commonHelper";
 
 const accessToken: string = process.env.PERSONAL_ACCESS_TOKEN as string;
 
 export const getGitHubStatsData = async (name: string) => {
   const allRepos = await fetchGitRepositories(name);
+
   return {
     topLanguages: getLanguageCount(allRepos),
     topStarredRepo: topStarredRepo(allRepos),
+    topRepoSize: topRepoSize(allRepos),
   };
 };
 
@@ -116,7 +118,6 @@ export const fetchRepositoriesWithPullRequests: any = async (
     endCursor = responseData.user.repositories.pageInfo.endCursor;
   }
   result = result.flat();
-  console.log(result);
   const repositoryNames = result.map((repo: any) => repo.name);
   const openPullRequests = result.map(
     (repo: any) => repo.openPullRequests.totalCount

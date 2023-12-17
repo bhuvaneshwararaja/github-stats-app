@@ -19,10 +19,10 @@ function GithubContributionCalendar({
       {yearList.length ? (
         <div className="relative">
           <div
-            className="rounded-md shadow-md p-3 w-full absolute"
+            className="rounded-md shadow-md py-10 w-full absolute  chart-box"
 
           >
-            <div className="flex flex-col  w-full  justify-center items-center">
+            <div className="flex flex-col  w-full  justify-center items-center p-3">
               <GitHubCalendar
                 username={name}
                 colorScheme="light"

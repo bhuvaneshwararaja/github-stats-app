@@ -4,10 +4,10 @@ import { UserContext } from "@/app/context";
 import Chart from "react-apexcharts";
 import Loader from "../helperComponent/loader";
 
-function TopStarredContainer() {
+function TopSizedRepo() {
   const userstatsData: any = useContext(UserContext);
   const [statsData, setStatsData] = useState(
-    userstatsData.statsData["topStarredRepo"]
+    userstatsData.statsData["topRepoSize"]
   );
   const [statsKey, setStatsKey] = useState<String[]>([]);
   const [loader,setLoader] = useState<Boolean>(false)
@@ -15,10 +15,10 @@ function TopStarredContainer() {
   useEffect(() => {
     if (userstatsData.statsData) {
       setLoader(true)
-      const languageData = userstatsData.statsData["topStarredRepo"];
+      const languageData = userstatsData.statsData["topRepoSize"];
       if (languageData) {
         let key = languageData.map((data: any) => data.repoName);
-        let data = languageData.map((data: any) => data.stargazers_count);
+        let data = languageData.map((data: any) => data.repoSize);
         setStatsData(data);
         setStatsKey(key);
       }
@@ -35,34 +35,34 @@ function TopStarredContainer() {
 
     },
     stroke: {
-      width: 0
-    },
-    dataLabels: {
-      enabled: false
-    },
-    grid: {
-      show: false,
-    },
-    xaxis: {
-      categories: statsKey,
-    },
-    colors: ["#FCCF31", "#17ead9", "#f02fc2"],
-    fill: {
-      type: "gradient",
-      gradient: {
-       gradientToColors: ["#F55555", "#6078ea", "#6094ea"],
-        shade: "dark",
-        type: "vertical",
-        shadeIntensity: 0.5,
-        inverseColors: false,
-        opacityFrom: 1,
-        opacityTo: 0.8,
-        stops: [0, 100]
-      }
-    },
-    tooltip: {
-      theme: "dark"
-    }
+     width: 0
+   },
+   dataLabels: {
+     enabled: false
+   },
+   grid: {
+     show: false,
+   },
+   xaxis: {
+     categories: statsKey,
+   },
+   colors: ["#5CAC82"],
+   fill: {
+     type: "gradient",
+     gradient: {
+       gradientToColors: ["#7CA5F1"],
+       shade: "dark",
+       type: "vertical",
+       shadeIntensity: 0.5,
+       inverseColors: false,
+       opacityFrom: 1,
+       opacityTo: 0.8,
+       stops: [0, 100]
+     }
+   },
+   tooltip: {
+     theme: "dark"
+   }
   };
 
   return (
@@ -87,4 +87,4 @@ function TopStarredContainer() {
   );
 }
 
-export default TopStarredContainer;
+export default TopSizedRepo;

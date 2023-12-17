@@ -34,3 +34,15 @@ const sortedArray = starredRepo.sort((a: any, b: any) => {
 
 return sortedArray.slice(0, 5);
 };
+
+export const topRepoSize = (allRepo: any[]) => {
+  let starredRepo: any = allRepo.map((data: any) => {
+   return { repoName: data.name, repoSize: data.size };
+ });
+ 
+ const sortedArray = starredRepo.sort((a: any, b: any) => {
+   return b.repoSize - a.repoSize;
+ });
+ 
+ return sortedArray.slice(0, 5);
+ };

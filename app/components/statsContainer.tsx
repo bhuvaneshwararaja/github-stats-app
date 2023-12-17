@@ -7,6 +7,7 @@ import TopLanguageContainer from "./StatsComponent/topLanguageContainer";
 import TopStarredContainer from "./StatsComponent/topStarredContainer";
 import { useRouter } from "next/navigation";
 import PullRequestStats from "./StatsComponent/pullRequestStats";
+import TopSizedRepo from "./StatsComponent/topSizedRepo";
 
 function StatsContainer() {
   const userInfo: any = useContext(UserContext);
@@ -38,24 +39,28 @@ function StatsContainer() {
 
   return (
     <>
-      <div className="flex flex-col">
+      <div className="flex flex-col p-5">
         <div className="flex justify-between mt-10">
           <TopLanguageContainer />
+          <TopSizedRepo />
           <TopStarredContainer />
-
         </div>
-        <div>
-            <StatsChips
-              statsData={{
-                followers: followers,
-                following: following,
-                totalRepos: public_repos,
-                gists: public_gists,
-              }}
-            />
-          </div>
+        <div className="mt-5">
+          <StatsChips
+            statsData={{
+              followers: followers,
+              following: following,
+              totalRepos: public_repos,
+              gists: public_gists,
+            }}
+          />
+        </div>
 
-          <PullRequestStats/>
+        <div className="mt-5">
+          <PullRequestStats />
+        </div>
+
+        <div className="mt-5">
           <GithubContributionCalendar
             yearRange={{
               startDate: created_at,
@@ -63,8 +68,8 @@ function StatsContainer() {
               name: login,
             }}
           />
+        </div>
       </div>
-
     </>
   );
 }

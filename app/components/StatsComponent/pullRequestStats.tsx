@@ -2,6 +2,7 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { UserContext } from "@/app/context";
 import Chart from "react-apexcharts";
+import Loader from "../helperComponent/loader";
 
 function PullRequestStats() {
   const userstatsData: any = useContext(UserContext);
@@ -9,7 +10,7 @@ function PullRequestStats() {
     userstatsData.statsData["PRStats"]
   );
   const [statsKey, setStatsKey] = useState([]);
-  const [loader, setLoader] = useState(false);
+  const [loader, setLoader] = useState<Boolean>(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalDataToShow, setTotalDataToShow] = useState(10);
   const [totalPages, setTotalPages] = useState(0);
@@ -18,11 +19,7 @@ function PullRequestStats() {
   useEffect(() => {
     if (userstatsData.statsData.PRStats) {
       paginatePRs();
-      console.log(
-        Math.round(
-          userstatsData.statsData["PRStats"]["openPRs"].length / totalDataToShow
-        )
-      );
+
       setTotalPages(
         Math.round(
           userstatsData.statsData["PRStats"]["openPRs"].length / totalDataToShow
@@ -36,6 +33,7 @@ function PullRequestStats() {
   }, [currentPage]);
 
   const paginatePRs = () => {
+    setLoader(true);
     const PRData = userstatsData.statsData["PRStats"];
 
     if (PRData) {
@@ -44,20 +42,21 @@ function PullRequestStats() {
 
       setStatsData([
         {
-          name:"openPR",
+          name: "openPR",
           data: PRData["openPRs"].slice(startIndex, endIndex),
         },
         {
-         name:"closedPR",
+          name: "closedPR",
           data: PRData["closedPRs"].slice(startIndex, endIndex),
         },
         {
-         name:"mergedPR",
+          name: "mergedPR",
           data: PRData["mergedPRs"].slice(startIndex, endIndex),
         },
       ]);
       setStatsKey(PRData.repoName.slice(startIndex, endIndex));
     }
+    setLoader(false);
   };
 
   let options: any = {
@@ -65,23 +64,31 @@ function PullRequestStats() {
       type: "bar",
       height: 430,
       foreColor: "#fff",
+      toolbar: {
+        show: false,
+      },
+    },
+    forecastDataPoints: {
+      count: 0,
+      fillOpacity: 0.5,
+      strokeWidth: undefined,
+      dashArray: 4,
+    },
+    stroke: {
+      colors: ["transparent"],
+      width: 5,
     },
     plotOptions: {
       bar: {
-        horizontal: false,
-        borderRadius: 0,
-        borderRadiusApplication: 'around',
-        borderRadiusWhenStacked: 'last',
-        columnWidth: '70%',
-        barHeight: '70%',
-        dataLabels: {
-          position: "top",
-        },
+        columnWidth: "100%",
+        rangeBarOverlap: true,
+        rangeBarGroupRows: false,
       },
     },
     tooltip: {
       shared: true,
       intersect: false,
+      theme: "dark",
     },
     xaxis: {
       categories: statsKey,
@@ -104,60 +111,30 @@ function PullRequestStats() {
         },
       },
     ],
+    colors: ["#FCCF31", "#17ead9", "#f02fc2"],
     fill: {
       type: "gradient",
       gradient: {
-        shadeIntensity: 0,
-        opacityFrom: 0.4,
-        opacityTo: 0.9,
-        stops: [0, 40, 90],
-        colorStops: [
-          [
-            {
-              offset: 30,
-              color: "#FDC830",
-              opacity: 10,
-            },
-            {
-              offset: 100,
-              color: "#F37335",
-              opacity: 50,
-            },
-          ],
-          [
-           {
-             offset: 30,
-             color: "#a8ff78",
-             opacity: 10,
-           },
-           {
-             offset: 100,
-             color: "#78ffd6",
-             opacity: 50,
-           },
-         ],
-         [
-          {
-            offset: 30,
-            color: "#bc4e9c",
-            opacity: 10,
-          },
-          {
-            offset: 100,
-            color: "#f80759",
-            opacity: 50,
-          },
-        ],
-        ],
+        gradientToColors: ["#F55555", "#6078ea", "#6094ea"],
+        shade: "dark",
+        type: "vertical",
+        shadeIntensity: 0.5,
+        inverseColors: false,
+        opacityFrom: 1,
+        opacityTo: 0.8,
+        stops: [0, 100],
       },
+    },
+    dataLabels: {
+      enabled: false,
     },
   };
 
   return (
     <div>
-      {statsData ? (
+      {statsData && !loader ? (
         <>
-          <div className="p-3 w-full flex flex-col">
+          <div className="p-3 w-full flex flex-col chart-box">
             <Chart
               options={options}
               series={statsData}
@@ -194,7 +171,11 @@ function PullRequestStats() {
             ) : null}
           </div>
         </>
-      ) : null}
+      ) : (
+        <div className="w-full flex justify-center items-center">
+          <Loader />
+        </div>
+      )}
     </div>
   );
 }

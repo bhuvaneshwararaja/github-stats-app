@@ -3,6 +3,9 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import UserContextProvider from "./UserContextProvider";
 import Image from "next/image";
+import Link from "next/link";
+import NavigationList from "./components/helperComponent/navigationList";
+import Footer from "./components/footer";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,10 +22,15 @@ export default function RootLayout({
   return (
     <html lang="en" data-theme="winter">
       <body className={inter.className}>
-        <div className="absolute top-3 left-3">
-        <Image src="/logo.png" width={50} height={50} alt="logo"></Image>
+        <div
+          className=" z-10 w-full p-2 flex justify-between"
+          style={{ backgroundColor: "#1B213B"}}
+        >
+          <Image src="/logo.png" width={50} height={50} alt="logo"></Image>
+          <NavigationList />
         </div>
         <UserContextProvider>{children}</UserContextProvider>
+        <Footer/>
       </body>
     </html>
   );

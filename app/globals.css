@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 body {
-  background-color: #0d1117;
+  background-color: #1B213B;
 }
 
 
@@ -115,9 +115,24 @@ body {
 }
 
 .chart-card {
-  height: 45vh;
+  height: 40vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 700px;
+}
+
+.chart-box{
+  background-color: #262D47;
+  border-radius: 10px;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+}
+
+.box {
+  background-color: #262D47;
+  padding: 25px 25px; 
+  border-radius: 4px; 
+}
+
+.columnbox {
+  padding-right: 15px;
 }
