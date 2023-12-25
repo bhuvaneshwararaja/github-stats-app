@@ -11,13 +11,13 @@ function TopLanguageContainer() {
   const [statsKey, setStatsKey] = useState<String[]>([]);
   const [loader, setLoader] = useState<Boolean>(false);
   useEffect(() => {
-    setLoader(true);
     if (userstatsData.statsData) {
+      setLoader(true);
       const languageData = userstatsData.statsData["topLanguages"];
       setStatsData(languageData ? Object.values(languageData) : []);
       setStatsKey(languageData ? Object.keys(languageData) : []);
+      setLoader(false);
     }
-    setLoader(false);
   }, [userstatsData]);
 
   let options: any = {
@@ -33,7 +33,7 @@ function TopLanguageContainer() {
     title: {
       text: "Most used Languages",
       align: "center",
-      floating:false,
+      floating: false,
       style: {
         fontSize: "20px",
         fontWeight: "bold",
@@ -52,24 +52,24 @@ function TopLanguageContainer() {
         enabled: true,
         style: "horizontalLines",
       },
-    }
+    },
   };
 
   return (
     <div>
-      {statsData && !loader ? (
-        <div className="p-3 chart-card chart-box">
+      <div className="p-3 chart-card chart-box">
+        {statsData && !loader ? (
           <Chart
             options={options}
             series={statsData}
             type="donut"
-              width={"530px"}
-              height={350}
+            width={"530px"}
+            height={350}
           />
-        </div>
-      ) : (
-        <Loader />
-      )}
+        ) : (
+          <Loader />
+        )}
+      </div>
     </div>
   );
 }

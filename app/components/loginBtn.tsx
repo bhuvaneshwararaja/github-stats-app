@@ -25,16 +25,16 @@ const LoginButton = ({ username,setError }: Props) => {
       const userDataResult = await getUserData.json();
       if (userDataResult && getUserData.status === 200) {
         userContext.setUserData(userDataResult);
-        // router.push("/stats")
-        // userContext.setShowMenu(true)
         globalContext.setShowMenu(true)
+        let statsData = await getStatsData(username)
+        await getPRData(username,statsData)
       }
       else if(getUserData.status === 404){
         setError("Enter valid github username");
+        userContext.setUserData([])
+        userContext.setStatsData([])
       }
   
-      let statsData = await getStatsData(username)
-      await getPRData(username,statsData)
       setIsLoading(false);
     }
     else{
