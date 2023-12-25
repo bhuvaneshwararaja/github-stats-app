@@ -1,8 +1,7 @@
-"use client";
 import React, { useContext, useEffect, useState } from "react";
-import { Pie } from "react-chartjs-2";
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { UserContext } from "@/app/context";
+import Chart from "react-apexcharts";
+import Loader from "../helperComponent/loader";
 
 function TopLanguageContainer() {
   const userstatsData: any = useContext(UserContext);
@@ -10,62 +9,67 @@ function TopLanguageContainer() {
     userstatsData.statsData["topLanguages"]
   );
   const [statsKey, setStatsKey] = useState<String[]>([]);
-
+  const [loader, setLoader] = useState<Boolean>(false);
   useEffect(() => {
+    setLoader(true);
     if (userstatsData.statsData) {
       const languageData = userstatsData.statsData["topLanguages"];
       setStatsData(languageData ? Object.values(languageData) : []);
       setStatsKey(languageData ? Object.keys(languageData) : []);
     }
+    setLoader(false);
   }, [userstatsData]);
 
-  ChartJS.register(ArcElement, Tooltip, Legend);
-
-  const options = {
-    responsive: true,
-    maintainAspectRation: true,
-    plugins: {
-      title: {
-        display: true,
-        text: "Top Languages",
+  let options: any = {
+    chart: {
+      id: "pie",
+      foreColor: "#fff",
+      type: "donut",
+      height: 450,
+      toolbar: {
+        show: false,
       },
     },
-  };
-  const pieChartData = {
-    labels: statsKey,
-    datasets: [
-      {
-        label: "Most used language",
-        data: statsData,
-        backgroundColor: [
-          "#0457ac",
-          "#308fac",
-          "#37bd79",
-          "#a7e237",
-          "#f4e604"
-        ],
-        borderColor: [
-         "#0457ac",
-         "#308fac",
-         "#37bd79",
-         "#a7e237",
-         "#f4e604"
-        ],
-        borderWidth: 1,
+    title: {
+      text: "Most used Languages",
+      align: "center",
+      floating:false,
+      style: {
+        fontSize: "20px",
+        fontWeight: "bold",
+        fontFamily: "monospace",
+        color: "#fff",
       },
-    ],
+    },
+    labels: statsKey,
+    grid: {
+      show: false,
+    },
+    fill: {
+      type: "pattern",
+      opacity: 1,
+      pattern: {
+        enabled: true,
+        style: "horizontalLines",
+      },
+    }
   };
 
   return (
     <div>
-      {statsData ? (
-        <Pie
-          height="300px"
-          width="600px"
-          data={pieChartData}
-          options={options}
-        />
-      ) : null}
+      {statsData && !loader ? (
+        <div className="p-3 chart-card chart-box">
+          <Chart
+            options={options}
+            series={statsData}
+            type="donut"
+              width={"530px"}
+              height={350}
+          />
+        </div>
+      ) : (
+        <Loader />
+      )}
     </div>
   );
 }

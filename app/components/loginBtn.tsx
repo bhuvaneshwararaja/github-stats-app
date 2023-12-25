@@ -1,7 +1,7 @@
 "use client";
 
-import React, { useContext, useEffect, useState } from "react";
-import { UserContext } from "../context";
+import React, { use, useContext, useEffect, useState } from "react";
+import { GlobalContext, UserContext } from "../context";
 import { useRouter } from "next/navigation";
 
 interface Props {
@@ -13,30 +13,46 @@ const LoginButton = ({ username,setError }: Props) => {
 
   const [isLoading, setIsLoading] = useState(false);
   const userContext: any = useContext(UserContext);
+  const globalContext: any = useContext(GlobalContext)
   const router = useRouter()
 
   const loginUser = async () => {
 
-    setIsLoading(true);
-    setError("")
-    const getUserData = await fetch(`/api/user/${username}`);
-    const userDataResult = await getUserData.json();
-    if (userDataResult && getUserData.status === 200) {
-      userContext.setUserData(userDataResult);
-      router.push("/stats")
+    if(username){
+      setIsLoading(true);
+      setError("")
+      const getUserData = await fetch(`/api/user/${username}`);
+      const userDataResult = await getUserData.json();
+      if (userDataResult && getUserData.status === 200) {
+        userContext.setUserData(userDataResult);
+        // router.push("/stats")
+        // userContext.setShowMenu(true)
+        globalContext.setShowMenu(true)
+      }
+      else if(getUserData.status === 404){
+        setError("Enter valid github username");
+      }
+  
+      let statsData = await getStatsData(username)
+      await getPRData(username,statsData)
+      setIsLoading(false);
     }
-    else if(getUserData.status === 404){
-      setError("Enter valid github username");
+    else{
+      setError("Please enter github username");
     }
 
-    await getStatsData(username)
-    setIsLoading(false);
   };
 
   const getStatsData = async (username:string) => {
     const getStatsData = await fetch(`/api/user/stats/${username}`,{'cache':"no-store"})
     const statsDataResult = await getStatsData.json()
     userContext.setStatsData(statsDataResult)
+   }
+
+  const getPRData = async (username:string,statsData:any) => {
+    const getStatsData = await fetch(`/api/user/stats/${username}/pullRequest`,{'cache':"no-store"})
+    const PRDataResult = await getStatsData.json()
+    userContext.setStatsData((prev:any) => {return {...prev,"PRStats":PRDataResult}})
    }
 
   return (
@@ -48,7 +64,7 @@ const LoginButton = ({ username,setError }: Props) => {
         </button>
       ) : (
         <button
-          className="btn w-40 btn-active mt-5 bg-indigo-500 text-white hover:bg-indigo-700"
+          className="btn w-40 btn-active mt-5 bg-indigo-900 border-none text-white hover:bg-indigo-800"
           onClick={loginUser}
         >
           Login

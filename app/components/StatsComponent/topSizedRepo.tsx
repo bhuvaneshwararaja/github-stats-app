@@ -4,10 +4,10 @@ import { UserContext } from "@/app/context";
 import Chart from "react-apexcharts";
 import Loader from "../helperComponent/loader";
 
-function TopStarredContainer() {
+function TopSizedRepo() {
   const userstatsData: any = useContext(UserContext);
   const [statsData, setStatsData] = useState(
-    userstatsData.statsData["topStarredRepo"]
+    userstatsData.statsData["topRepoSize"]
   );
   const [statsKey, setStatsKey] = useState<String[]>([]);
   const [loader, setLoader] = useState<Boolean>(false);
@@ -15,10 +15,10 @@ function TopStarredContainer() {
   useEffect(() => {
     if (userstatsData.statsData) {
       setLoader(true);
-      const languageData = userstatsData.statsData["topStarredRepo"];
+      const languageData = userstatsData.statsData["topRepoSize"];
       if (languageData) {
         let key = languageData.map((data: any) => data.repoName);
-        let data = languageData.map((data: any) => data.stargazers_count);
+        let data = languageData.map((data: any) => data.repoSize);
         setStatsData(data);
         setStatsKey(key);
       }
@@ -36,7 +36,7 @@ function TopStarredContainer() {
       },
     },
     title: {
-      text: "Top Starred Repositories",
+      text: "Top Sized Repositories",
       align: "center",
       floating: true,
       style: {
@@ -58,11 +58,11 @@ function TopStarredContainer() {
     xaxis: {
       categories: statsKey,
     },
-    colors: ["#006466"],
+    colors: ["#b7094c"],
     fill: {
       type: "gradient",
       gradient: {
-        gradientToColors: ["#312244"],
+        gradientToColors: ["#0091ad"],
         shade: "dark",
         type: "vertical",
         shadeIntensity: 0.5,
@@ -75,45 +75,30 @@ function TopStarredContainer() {
     tooltip: {
       theme: "dark",
     },
-    responsive: [
-      {
-        breakpoint: 1200,
-        options: {
-          plotOptions: {
-            bar: {
-              horizontal: false,
-            },
-          },
-          legend: {
-            position: "bottom",
-          },
-        },
-      },
-    ],
   };
 
   return (
     <div>
-      <div className="p-3 chart-card chart-box">
-        {statsData && !loader ? (
-          <Chart
-            options={options}
-            series={[
-              {
-                name:"Total stars",
-                data: statsData,
-              },
-            ]}
-            type="bar"
-            width={"700px"}
-            height={300}
-          />
-        ) : (
-          <Loader />
-        )}
-      </div>
+        <div className="p-3 chart-card chart-box">
+          {statsData && !loader ? (
+            <Chart
+              options={options}
+              series={[
+                {
+                  name:"Repo Size",
+                  data: statsData,
+                },
+              ]}
+              type="bar"
+              width={"700px"}
+              height={300}
+            />
+          ) : (
+            <Loader />
+          )}
+        </div>
     </div>
   );
 }
 
-export default TopStarredContainer;
+export default TopSizedRepo;
