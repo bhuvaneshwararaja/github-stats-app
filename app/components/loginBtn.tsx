@@ -1,7 +1,7 @@
 "use client";
 
 import React, { use, useContext, useEffect, useState } from "react";
-import { UserContext } from "../context";
+import { GlobalContext, UserContext } from "../context";
 import { useRouter } from "next/navigation";
 
 interface Props {
@@ -13,6 +13,7 @@ const LoginButton = ({ username,setError }: Props) => {
 
   const [isLoading, setIsLoading] = useState(false);
   const userContext: any = useContext(UserContext);
+  const globalContext: any = useContext(GlobalContext)
   const router = useRouter()
 
   const loginUser = async () => {
@@ -24,7 +25,9 @@ const LoginButton = ({ username,setError }: Props) => {
       const userDataResult = await getUserData.json();
       if (userDataResult && getUserData.status === 200) {
         userContext.setUserData(userDataResult);
-        router.push("/stats")
+        // router.push("/stats")
+        // userContext.setShowMenu(true)
+        globalContext.setShowMenu(true)
       }
       else if(getUserData.status === 404){
         setError("Enter valid github username");

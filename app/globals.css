@@ -3,14 +3,14 @@
 @tailwind utilities;
 
 body {
-  background-color: #1B213B;
+  background-color: #0a0c11;
 }
 
 
 
-.h-100 {
+/* .h-100 {
   height: 100vh;
-}
+} */
 
 .he-80 {
 
@@ -20,6 +20,11 @@ body {
 .he-100 {
 
   height: 100vh;
+}
+
+.he-90 {
+
+  height: 90vh;
 }
 
 .he-18 {
@@ -122,17 +127,37 @@ body {
 }
 
 .chart-box{
-  background-color: #262D47;
+  background-color: #1b1d27;
+  
   border-radius: 10px;
   box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
 }
 
 .box {
-  background-color: #262D47;
+  background-color: #1b1d27;
   padding: 25px 25px; 
   border-radius: 4px; 
 }
 
 .columnbox {
   padding-right: 15px;
+}
+
+.shine{
+  width: 100%;
+  height: inherit;
+  margin-left: -100px;
+  transform: rotate(30deg);
+  background: -webkit-linear-gradient(top, transparent, rgba(200,200,200,0.1),transparent);
+  position: absolute;
+  animation: shine 6s ease-in-out infinite;
+}
+@keyframes shine{
+  0%,100%{
+    margin-top: -100px;
+    
+  }
+  50%{
+    margin-top: 800px;
+  }
 }

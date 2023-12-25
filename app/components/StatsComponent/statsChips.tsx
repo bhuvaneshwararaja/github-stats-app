@@ -5,10 +5,13 @@ function StatsChips({
   statsData: { followers, following, totalRepos, gists },
 }: any) {
   return (
-    <div className="w-full grid grid-cols-4 gap-5">
-      <div className="stats stats-vertical shadow  ">
+    <div className="w-full grid grid-cols-2 gap-2">
+      <div
+        className="stats stats-horizontal shadow "
+        style={{ background: "#1b1d27" }}
+      >
         <div className="stat place-items-center">
-          <div className="stat-figure text-pink-500">
+          <div className="stat-figure text-white">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -23,13 +26,16 @@ function StatsChips({
               ></path>
             </svg>
           </div>
-          <div className="stat-title text-black">Followers</div>
-          <div className="stat-value text-black">{followers}</div>
+          <div className="stat-title text-white">Followers</div>
+          <div className="stat-value text-white">{followers}</div>
         </div>
       </div>
-      <div className="stats stats-horizontal shadow  ">
+      <div
+        className="stats stats-horizontal shadow "
+        style={{ background: "#1b1d27" }}
+      >
         <div className="stat place-items-center">
-          <div className="stat-figure text-green-500">
+          <div className="stat-figure text-white">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -44,13 +50,16 @@ function StatsChips({
               ></path>
             </svg>
           </div>
-          <div className="stat-title text-black">Following</div>
-          <div className="stat-value text-black">{following}</div>
+          <div className="stat-title text-white">Following</div>
+          <div className="stat-value text-white">{following}</div>
         </div>
       </div>
-      <div className="stats stats-horizontal shadow  ">
+      <div
+        className="stats stats-horizontal shadow "
+        style={{ background: "#1b1d27" }}
+      >
         <div className="stat place-items-center">
-          <div className="stat-figure text-purple-500">
+          <div className="stat-figure text-white">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -65,13 +74,16 @@ function StatsChips({
               ></path>
             </svg>
           </div>
-          <div className="stat-title text-black">Total Repo</div>
-          <div className="stat-value text-black">{totalRepos}</div>
+          <div className="stat-title text-white">Total Repo</div>
+          <div className="stat-value text-white">{totalRepos}</div>
         </div>
       </div>
-      <div className="stats stats-horizontal shadow  ">
+      <div
+        className="stats stats-horizontal shadow "
+        style={{ background: "#1b1d27" }}
+      >
         <div className="stat place-items-center">
-          <div className="stat-figure text-black">
+          <div className="stat-figure text-white">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -86,8 +98,8 @@ function StatsChips({
               ></path>
             </svg>
           </div>
-          <div className="stat-title text-black">Public Gists</div>
-          <div className="stat-value text-black">{gists}</div>
+          <div className="stat-title text-white">Public Gists</div>
+          <div className="stat-value text-white">{gists}</div>
         </div>
       </div>
     </div>

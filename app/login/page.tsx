@@ -2,9 +2,9 @@ import React from "react";
 import LoginForm from "../components/loginForm";
 import Image from "next/image";
 
-const Login = () => {
+const Login = (props:any) => {
   return (
-    <div className="w-100 he-100 flex px-32 items-center justify-between">
+    <div className="w-100 flex px-32 items-center justify-between" style={{height:"inherit"}}>
       <div></div>
       <div className="flex flex-col justify-around">
         <h1 className="text-5xl font-bold text-white items-center">

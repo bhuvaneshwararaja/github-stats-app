@@ -1,19 +1,36 @@
 "use client";
-import React from "react";
-import { useRouter } from "next/navigation";
-import Link from "next/link";
+import React, { useState } from "react";
 
-function NavigationList() {
-  const router = useRouter();
+function NavigationList(props: any) {
+  const [showStatsMenu, setShowStatsMenu] = useState(false);
+  const [showRepoMenu, setShowRepoMenu] = useState(true);
 
   return (
-    <ul className="flex w-48 justify-between">
-      <Link href="/stats" className="text-white text-xl cursor-pointer">
-       Stats
-      </Link>
-      <Link href="/repositories" className="text-white text-xl cursor-pointer">
-        Repository
-      </Link>
+    <ul className="flex justify-between mr-2">
+      {showStatsMenu ? (
+        <li
+          className="text-white text-xl cursor-pointer font-mono"
+          onClick={() => {
+            props.scrollView(props.statsView);
+            setShowRepoMenu(true);
+            setShowStatsMenu(false);
+          }}
+        >
+          Stats
+        </li>
+      ) : null}
+      {showRepoMenu ? (
+        <li
+          className="text-white text-xl cursor-pointer font-mono"
+          onClick={() => {
+            props.scrollView(props.repoView);
+            setShowRepoMenu(false);
+            setShowStatsMenu(true);
+          }}
+        >
+          Repository
+        </li>
+      ) : null}
     </ul>
   );
 }

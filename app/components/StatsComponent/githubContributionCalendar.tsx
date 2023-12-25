@@ -19,10 +19,12 @@ function GithubContributionCalendar({
       {yearList.length ? (
         <div className="relative">
           <div
-            className="rounded-md shadow-md py-10 w-full absolute  chart-box"
+            className="rounded-md shadow-md py-10 w-full  chart-box"
 
           >
             <div className="flex flex-col  w-full  justify-center items-center p-3">
+              <h1 className="text-white font-mono text-2xl font-bold">Activity calendar</h1>
+              <div className="mt-5">
               <GitHubCalendar
                 username={name}
                 colorScheme="light"
@@ -30,6 +32,7 @@ function GithubContributionCalendar({
                 fontSize={18}
                 blockMargin={10}
               />
+              </div>
               <div className=" overflow-y-scroll">
                 <ul className="menu rounded-box ml-2 flex-row">
                   {yearList.map((currentYear: number) => (

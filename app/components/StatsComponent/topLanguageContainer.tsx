@@ -26,6 +26,20 @@ function TopLanguageContainer() {
       foreColor: "#fff",
       type: "donut",
       height: 450,
+      toolbar: {
+        show: false,
+      },
+    },
+    title: {
+      text: "Most used Languages",
+      align: "center",
+      floating:false,
+      style: {
+        fontSize: "20px",
+        fontWeight: "bold",
+        fontFamily: "monospace",
+        color: "#fff",
+      },
     },
     labels: statsKey,
     grid: {
@@ -38,22 +52,7 @@ function TopLanguageContainer() {
         enabled: true,
         style: "horizontalLines",
       },
-    },
-    responsive: [
-      {
-        breakpoint: 300,
-        options: {
-          plotOptions: {
-            bar: {
-              horizontal: false,
-            },
-          },
-          legend: {
-            position: "bottom",
-          },
-        },
-      },
-    ],
+    }
   };
 
   return (
@@ -64,7 +63,8 @@ function TopLanguageContainer() {
             options={options}
             series={statsData}
             type="donut"
-            width={"530px"}
+              width={"530px"}
+              height={350}
           />
         </div>
       ) : (

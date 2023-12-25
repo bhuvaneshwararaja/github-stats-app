@@ -10,11 +10,11 @@ function TopStarredContainer() {
     userstatsData.statsData["topStarredRepo"]
   );
   const [statsKey, setStatsKey] = useState<String[]>([]);
-  const [loader,setLoader] = useState<Boolean>(false)
+  const [loader, setLoader] = useState<Boolean>(false);
 
   useEffect(() => {
     if (userstatsData.statsData) {
-      setLoader(true)
+      setLoader(true);
       const languageData = userstatsData.statsData["topStarredRepo"];
       if (languageData) {
         let key = languageData.map((data: any) => data.repoName);
@@ -22,8 +22,7 @@ function TopStarredContainer() {
         setStatsData(data);
         setStatsKey(key);
       }
-      setLoader(false)
-
+      setLoader(false);
     }
   }, [userstatsData]);
 
@@ -32,13 +31,26 @@ function TopStarredContainer() {
       id: "basic-bar",
       foreColor: "#fff",
       height: 400,
-
+      toolbar: {
+        show: false,
+      },
+    },
+    title: {
+      text: "Top Starred Repositories",
+      align: "center",
+      floating: true,
+      style: {
+        fontSize: "20px",
+        fontWeight: "bold",
+        fontFamily: "monospace",
+        color: "#fff",
+      },
     },
     stroke: {
-      width: 0
+      width: 0,
     },
     dataLabels: {
-      enabled: false
+      enabled: false,
     },
     grid: {
       show: false,
@@ -46,43 +58,60 @@ function TopStarredContainer() {
     xaxis: {
       categories: statsKey,
     },
-    colors: ["#FCCF31", "#17ead9", "#f02fc2"],
+    colors: ["#006466"],
     fill: {
       type: "gradient",
       gradient: {
-       gradientToColors: ["#F55555", "#6078ea", "#6094ea"],
+        gradientToColors: ["#312244"],
         shade: "dark",
         type: "vertical",
         shadeIntensity: 0.5,
         inverseColors: false,
         opacityFrom: 1,
         opacityTo: 0.8,
-        stops: [0, 100]
-      }
+        stops: [0, 100],
+      },
     },
     tooltip: {
-      theme: "dark"
-    }
+      theme: "dark",
+    },
+    responsive: [
+      {
+        breakpoint: 1200,
+        options: {
+          plotOptions: {
+            bar: {
+              horizontal: false,
+            },
+          },
+          legend: {
+            position: "bottom",
+          },
+        },
+      },
+    ],
   };
 
   return (
     <div>
-      {statsData && !loader? (
-        <>
-          <div className="p-3 chart-card chart-box">
-            <Chart
-              options={options}
-              series={[
-                {
-                  data: statsData,
-                },
-              ]}
-              type="bar"
-              width={"530px"}
-            />
-          </div>
-        </>
-      ) : <Loader/>}
+      <div className="p-3 chart-card chart-box">
+        {statsData && !loader ? (
+          <Chart
+            options={options}
+            series={[
+              {
+                name:"Total stars",
+                data: statsData,
+              },
+            ]}
+            type="bar"
+            width={"700px"}
+            height={300}
+          />
+        ) : (
+          <Loader />
+        )}
+      </div>
     </div>
   );
 }

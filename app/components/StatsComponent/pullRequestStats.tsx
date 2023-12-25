@@ -42,15 +42,15 @@ function PullRequestStats() {
 
       setStatsData([
         {
-          name: "openPR",
+          name: "Open PRs",
           data: PRData["openPRs"].slice(startIndex, endIndex),
         },
         {
-          name: "closedPR",
+          name: "Closed PRs",
           data: PRData["closedPRs"].slice(startIndex, endIndex),
         },
         {
-          name: "mergedPR",
+          name: "Merged PRs",
           data: PRData["mergedPRs"].slice(startIndex, endIndex),
         },
       ]);
@@ -66,6 +66,17 @@ function PullRequestStats() {
       foreColor: "#fff",
       toolbar: {
         show: false,
+      },
+    },
+    title: {
+      text: "Pull Request Stats",
+      align: "center",
+      floating: true,
+      style: {
+        fontSize: "20px",
+        fontWeight: "bold",
+        fontFamily: "monospace",
+        color: "#fff",
       },
     },
     forecastDataPoints: {
@@ -111,11 +122,11 @@ function PullRequestStats() {
         },
       },
     ],
-    colors: ["#FCCF31", "#17ead9", "#f02fc2"],
+    colors: ["#f94144", "#90be6d", "#577590"],
     fill: {
       type: "gradient",
       gradient: {
-        gradientToColors: ["#F55555", "#6078ea", "#6094ea"],
+        gradientToColors: ["#f8961e", "#43aa8b", "#277da1"],
         shade: "dark",
         type: "vertical",
         shadeIntensity: 0.5,
@@ -132,50 +143,52 @@ function PullRequestStats() {
 
   return (
     <div>
-      {statsData && !loader ? (
-        <>
-          <div className="p-3 w-full flex flex-col chart-box">
-            <Chart
-              options={options}
-              series={statsData}
-              type="bar"
-              width={"100%"}
-              height={500}
-            />
-            {totalPages > 1 ? (
-              <div className="flex justify-center mt-8">
-                <div className="join">
-                  {new Array(totalPages).fill(0).map((pageIndex, index) => {
-                    return (
-                      <input
-                        ref={inputRef}
-                        className={`join-item btn btn-square`}
-                        type="radio"
-                        name="options"
-                        aria-label={(index + 1).toString()}
-                        style={
-                          currentPage === index + 1
-                            ? { background: "#333", border: "none" }
-                            : {}
-                        }
-                        defaultChecked={currentPage === index + 1}
-                        onInput={(e) => {
-                          setCurrentPage(index + 1);
-                        }}
-                        key={index}
-                      />
-                    );
-                  })}
+      <>
+        <div className="p-3 w-full flex flex-col chart-box">
+          {statsData && !loader ? (
+            <>
+              <Chart
+                options={options}
+                series={statsData}
+                type="bar"
+                width={"100%"}
+                height={350}
+              />
+              {totalPages > 1 ? (
+                <div className="flex justify-center mt-8">
+                  <div className="join">
+                    {new Array(totalPages).fill(0).map((pageIndex, index) => {
+                      return (
+                        <input
+                          ref={inputRef}
+                          className={`join-item btn btn-square`}
+                          type="radio"
+                          name="options"
+                          aria-label={(index + 1).toString()}
+                          style={
+                            currentPage === index + 1
+                              ? { background: "#333", border: "none" }
+                              : {}
+                          }
+                          defaultChecked={currentPage === index + 1}
+                          onInput={(e) => {
+                            setCurrentPage(index + 1);
+                          }}
+                          key={index}
+                        />
+                      );
+                    })}
+                  </div>
                 </div>
-              </div>
-            ) : null}
-          </div>
-        </>
-      ) : (
-        <div className="w-full flex justify-center items-center">
-          <Loader />
+              ) : null}
+            </>
+          ) : (
+            <div className="w-full flex justify-center items-center">
+              <Loader />
+            </div>
+          )}
         </div>
-      )}
+      </>
     </div>
   );
 }

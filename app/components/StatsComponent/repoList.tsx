@@ -42,11 +42,12 @@ function RepoList() {
   };
 
   return (
-    <div>
+    <div className="flex flex-col justify-center items-center" style={{width:"100%",height:"100vh"}}>
       <>
+        <h1 className="text-2xl text-white font-mono">Your Repositories</h1>
         <div
-          className="overflow-y-scroll grid grid-cols-3 grid-4 p-3"
-          style={{ height: "80vh" }}
+          className="overflow-y-scroll grid grid-cols-3 grid-4 p-3 w-full place-items-center"
+          style={{ height: "70vh" }}
         >
           {loader ? (
             <>
@@ -62,7 +63,7 @@ function RepoList() {
                     return (
                       <div
                         className="list-tabs w-11/12 h-40 flex flex-col justify-between shadow-md rounded-md mt-3 p-3 cursor-pointer"
-                        style={{ backgroundColor: "#262D47" }}
+                        style={{ backgroundColor: "#1b1d27" }}
                         key={data}
                       >
                         <div className="flex flex-col">

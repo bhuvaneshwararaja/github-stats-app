@@ -10,11 +10,11 @@ function TopSizedRepo() {
     userstatsData.statsData["topRepoSize"]
   );
   const [statsKey, setStatsKey] = useState<String[]>([]);
-  const [loader,setLoader] = useState<Boolean>(false)
+  const [loader, setLoader] = useState<Boolean>(false);
 
   useEffect(() => {
     if (userstatsData.statsData) {
-      setLoader(true)
+      setLoader(true);
       const languageData = userstatsData.statsData["topRepoSize"];
       if (languageData) {
         let key = languageData.map((data: any) => data.repoName);
@@ -22,8 +22,7 @@ function TopSizedRepo() {
         setStatsData(data);
         setStatsKey(key);
       }
-      setLoader(false)
-
+      setLoader(false);
     }
   }, [userstatsData]);
 
@@ -32,57 +31,72 @@ function TopSizedRepo() {
       id: "basic-bar",
       foreColor: "#fff",
       height: 400,
-
+      toolbar: {
+        show: false,
+      },
+    },
+    title: {
+      text: "Top Sized Repositories",
+      align: "center",
+      floating: true,
+      style: {
+        fontSize: "20px",
+        fontWeight: "bold",
+        fontFamily: "monospace",
+        color: "#fff",
+      },
     },
     stroke: {
-     width: 0
-   },
-   dataLabels: {
-     enabled: false
-   },
-   grid: {
-     show: false,
-   },
-   xaxis: {
-     categories: statsKey,
-   },
-   colors: ["#5CAC82"],
-   fill: {
-     type: "gradient",
-     gradient: {
-       gradientToColors: ["#7CA5F1"],
-       shade: "dark",
-       type: "vertical",
-       shadeIntensity: 0.5,
-       inverseColors: false,
-       opacityFrom: 1,
-       opacityTo: 0.8,
-       stops: [0, 100]
-     }
-   },
-   tooltip: {
-     theme: "dark"
-   }
+      width: 0,
+    },
+    dataLabels: {
+      enabled: false,
+    },
+    grid: {
+      show: false,
+    },
+    xaxis: {
+      categories: statsKey,
+    },
+    colors: ["#b7094c"],
+    fill: {
+      type: "gradient",
+      gradient: {
+        gradientToColors: ["#0091ad"],
+        shade: "dark",
+        type: "vertical",
+        shadeIntensity: 0.5,
+        inverseColors: false,
+        opacityFrom: 1,
+        opacityTo: 0.8,
+        stops: [0, 100],
+      },
+    },
+    tooltip: {
+      theme: "dark",
+    },
   };
 
   return (
     <div>
-      {statsData && !loader? (
-        <>
-          <div className="p-3 chart-card chart-box">
+        <div className="p-3 chart-card chart-box">
+          {statsData && !loader ? (
             <Chart
               options={options}
               series={[
                 {
+                  name:"Repo Size",
                   data: statsData,
                 },
               ]}
               type="bar"
-              width={"530px"}
+              width={"700px"}
+              height={300}
             />
-          </div>
-        </>
-      ) : <Loader/>}
+          ) : (
+            <Loader />
+          )}
+        </div>
     </div>
   );
 }
